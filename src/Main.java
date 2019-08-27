@@ -5,10 +5,15 @@ public class Main {
 
     public static void main(String[] args) {
 
+
+
+
         preencherEpsilon(-3);
         preencherFuncao(3,-9,0,1,0,0);
-        System.out.println(resolverFuncao(-4));
-
+        ArrayList<Integer[]> intervalos = acharIntervalos();
+        for (Integer[] i : intervalos){
+            System.out.println(refinarValores(i));
+        }
     }
 
     static float t0 = 0; //termo independente da função
@@ -30,20 +35,20 @@ public class Main {
     }
 
     public static float preencherEpsilon(int n){
-        epsilon = 10 ^ n;
+        epsilon = (float) Math.pow(10,(double) n);
         return epsilon;
     }
 
-    public static float resolverFuncao(float x){
-        System.out.println(Math.pow(x,5) * t5);
-        System.out.println(Math.pow(x,4) * t4);
-        System.out.println(Math.pow(x,3) * t3);
-        System.out.println(Math.pow(x,2) * t2);
-        System.out.println(x * t1);
-        System.out.println(t0);
+    public static double resolverFuncao(double x){
+//        System.out.println(Math.pow(x,5) * t5);
+//        System.out.println(Math.pow(x,4) * t4);
+//        System.out.println(Math.pow(x,3) * t3);
+//        System.out.println(Math.pow(x,2) * t2);
+//        System.out.println(x * t1);
+//        System.out.println(t0);
 
 
-        return (float) (Math.pow(x,5) * t5 + Math.pow(x,4) * t4 + Math.pow(x,3) * t3 + Math.pow(x,2) * t2 + x * t1 + t0);
+        return (Math.pow(x,5) * t5 + Math.pow(x,4) * t4 + Math.pow(x,3) * t3 + Math.pow(x,2) * t2 + x * t1 + t0);
     }
 
     /**
@@ -57,7 +62,7 @@ public class Main {
         ArrayList<Integer[]> intervalos = new ArrayList<>();
         Integer[] intervalo;
 
-        for(int i = -10; i <10;i++){
+        for(int i = -99; i <100;i++){
             intervalo = new Integer[2];
             //System.out.println(resolverFuncao(i));
             //System.out.println(resolverFuncao(i-1));
@@ -70,22 +75,22 @@ public class Main {
         return intervalos;
     }
 
-    public static Float refinarValores(Integer[] intervalo){
+    public static Double refinarValores(Integer[] intervalo){
 
-        float a = intervalo[0];
-        float b = intervalo[1];
+        double a = intervalo[0];
+        double b = intervalo[1];
 
-        while(Math.abs(b-a)>epsilon){
-            float aux = ((b-a)/2);
+        do{
+            double aux = ((b+a)/2);
 
             if(resolverFuncao(aux)*resolverFuncao(a)<0){
                 b = aux;
             }else {
                 a = aux;
             }
-        }
+        }while(Math.abs(b-a)>epsilon);
 
-        if(Math.abs(b)<Math.abs(a)){
+        if(Math.abs(resolverFuncao(b))<Math.abs(resolverFuncao(a))){
             return b;
         }else {
             return a;
