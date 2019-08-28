@@ -1,31 +1,33 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Main {
+public class Biseccaco {
 
-    public static void main(String[] args) {
+//    public static void main(String[] args) {
+//
+//
+//
+//
+//        preencherEpsilon(-3);
+//        preencherFuncao(3,-9,0,1,0,0);
+//        ArrayList<Integer[]> intervalos = acharIntervalos();
+//        for (Integer[] i : intervalos){
+//            System.out.println(refinarValores(i));
+//        }
+//    }
+
+    float t0 = 0; //termo independente da função
+    float t1 = 0;
+    float t2 = 0;
+    float t3 = 0;
+    float t4 = 0;
+    float t5 = 0;
+    double epsilon = 0.001;
+
+    ArrayList<Integer[]> intervalos;
 
 
-
-
-        preencherEpsilon(-3);
-        preencherFuncao(3,-9,0,1,0,0);
-        ArrayList<Integer[]> intervalos = acharIntervalos();
-        for (Integer[] i : intervalos){
-            System.out.println(refinarValores(i));
-        }
-    }
-
-    static float t0 = 0; //termo independente da função
-    static float t1 = 0;
-    static float t2 = 0;
-    static float t3 = 0;
-    static float t4 = 0;
-    static float t5 = 0;
-    static float epsilon;
-
-
-    public static void preencherFuncao(float a0, float a1, float a2, float a3, float a4, float a5){
+    public void preencherFuncao(float a0, float a1, float a2, float a3, float a4, float a5){
         t0 = a0;
         t1 = a1;
         t2 = a2;
@@ -34,12 +36,12 @@ public class Main {
         t5 = a5;
     }
 
-    public static float preencherEpsilon(int n){
-        epsilon = (float) Math.pow(10,(double) n);
+    public double preencherEpsilon(int n){
+        epsilon = Math.pow(10,(double) n);
         return epsilon;
     }
 
-    public static double resolverFuncao(double x){
+    public double resolverFuncao(double x){
 //        System.out.println(Math.pow(x,5) * t5);
 //        System.out.println(Math.pow(x,4) * t4);
 //        System.out.println(Math.pow(x,3) * t3);
@@ -56,7 +58,7 @@ public class Main {
      *
      * @return intervalos com os inteiros
      */
-    public static ArrayList<Integer[]> acharIntervalos(){
+    public ArrayList<Integer[]> acharIntervalos(){
 
 
         ArrayList<Integer[]> intervalos = new ArrayList<>();
@@ -75,7 +77,7 @@ public class Main {
         return intervalos;
     }
 
-    public static Double refinarValores(Integer[] intervalo){
+    public Double refinarValores(Integer[] intervalo){
 
         double a = intervalo[0];
         double b = intervalo[1];
@@ -96,8 +98,27 @@ public class Main {
             return a;
         }
 
-
     }
+
+    public String exibirIntervalos(){
+        StringBuilder retorno = new StringBuilder("Intervalos: \n");
+        intervalos = acharIntervalos();
+
+        for(Integer[] i : intervalos){
+            retorno.append(String.format("[%d,%d] \n", i[0], i[1]));
+        }
+        return retorno.toString();
+    }
+
+    public String exibirRaizes(){
+        StringBuilder retorno = new StringBuilder("Raízes: \n");
+        for (Integer[] i : intervalos) {
+            retorno.append(refinarValores(i)).append("\n");
+        }
+        return retorno.toString();
+    }
+
+
 
     //|b-a| < epsilon
 
