@@ -17,6 +17,7 @@ public class BisceccaoGui {
     private JPanel painel;
     private JTextPane textPane1;
     private JTextPane textPane2;
+    private JTextField textField7;
 
     public BisceccaoGui() {
         button1.addActionListener(new ActionListener() {
@@ -30,6 +31,8 @@ public class BisceccaoGui {
                 Float a2 = Float.parseFloat(textField4.getText());
                 Float a1 = Float.parseFloat(textField5.getText());
                 Float a0 = Float.parseFloat(textField6.getText());
+                Integer epsilon = Integer.parseInt(textField7.getText());
+                biseccaco.preencherEpsilon(epsilon);
                 biseccaco.preencherFuncao(a5,a4,a3,a2,a1,a0);
                 textPane1.setText(biseccaco.exibirIntervalos());
                 textPane2.setText(biseccaco.exibirRaizes());
@@ -45,5 +48,9 @@ public class BisceccaoGui {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
+    }
+
+    private void createUIComponents() {
+        // TODO: place custom component creation code here
     }
 }
