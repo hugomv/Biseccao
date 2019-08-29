@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="biseccao:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/biseccao_jar</output-path>
+    <root id="archive" name="biseccao.jar">
+      <element id="module-output" name="biseccao" />
+      <element id="artifact" artifact-name="Biseccao" />
+    </root>
+  </artifact>
+</component>

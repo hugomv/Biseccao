@@ -3,18 +3,6 @@ import java.util.List;
 
 public class Biseccaco {
 
-//    public static void main(String[] args) {
-//
-//
-//
-//
-//        preencherEpsilon(-3);
-//        preencherFuncao(3,-9,0,1,0,0);
-//        ArrayList<Integer[]> intervalos = acharIntervalos();
-//        for (Integer[] i : intervalos){
-//            System.out.println(refinarValores(i));
-//        }
-//    }
 
     float t0 = 0; //termo independente da função
     float t1 = 0;
@@ -101,7 +89,6 @@ public class Biseccaco {
         do{
             double aux = ((b+a)/2);
             retorno.add(aux);
-            //retorno.add(resolverFuncao(aux));
             if(resolverFuncao(aux)*resolverFuncao(a)<0){
                 b = aux;
             }else {
@@ -111,10 +98,8 @@ public class Biseccaco {
 
         if(Math.abs(resolverFuncao(b))<Math.abs(resolverFuncao(a))){
             retorno.add(b);
-            //retorno.add(resolverFuncao(b));
         }else {
             retorno.add(a);
-            //retorno.add(resolverFuncao(b));
         }
         return retorno;
 
@@ -129,27 +114,6 @@ public class Biseccaco {
         }
         return retorno.toString();
     }
-
-    public ArrayList<String> exibirIntervalos1(){
-        ArrayList<String> retorno = new ArrayList<>();
-        intervalos = acharIntervalos();
-
-        for(Integer[] i : intervalos){
-            retorno.add(String.format("[%d,%d] \n", i[0], i[1]));
-        }
-        return retorno;
-    }
-
-    public String exibirRaizes1(){
-        StringBuilder retorno = new StringBuilder("Raízes: \n");
-        for (Integer[] i : intervalos) {
-            retorno.append(refinarValores(i)).append("\n");
-        }
-        return retorno.toString();
-    }
-
-
-
     //|b-a| < epsilon
 
 }
