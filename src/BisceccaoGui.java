@@ -1,7 +1,10 @@
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.InputMethodEvent;
+import java.util.ArrayList;
 
 public class BisceccaoGui {
 
@@ -18,11 +21,16 @@ public class BisceccaoGui {
     private JTextPane textPane1;
     private JTextPane textPane2;
     private JTextField textField7;
+    private JList list1;
 
     public BisceccaoGui() {
+
+        Biseccaco biseccaco = new Biseccaco();
+
+
         button1.addActionListener(new ActionListener() {
 
-            Biseccaco biseccaco = new Biseccaco();
+
             @Override
             public void actionPerformed(ActionEvent e) {
                 Float a5 = Float.parseFloat(textField1.getText());
@@ -34,9 +42,40 @@ public class BisceccaoGui {
                 Integer epsilon = Integer.parseInt(textField7.getText());
                 biseccaco.preencherEpsilon(epsilon);
                 biseccaco.preencherFuncao(a5,a4,a3,a2,a1,a0);
-                textPane1.setText(biseccaco.exibirIntervalos());
-                textPane2.setText(biseccaco.exibirRaizes());
+                ArrayList<Integer[]> intervalos = biseccaco.acharIntervalos();
+                //criar lista de raízes
+                DefaultListModel listModel = new DefaultListModel();
+                list1.setModel(listModel);
+                for (int i = 0;i<intervalos.size();i++){
+                    listModel.add(i,String.format("[%d,%d]",intervalos.get(i)[0],intervalos.get(i)[1]));
+                }
 
+
+
+                textPane1.setText(biseccaco.exibirIntervalos());
+                //textPane2.setText(biseccaco.exibirRaizes());
+
+
+            }
+        });
+        list1.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+
+                ArrayList<Integer[]> intervalos = biseccaco.acharIntervalos();
+
+
+                ArrayList<Double> raizes_aproximadas = biseccaco.refinarValores1(intervalos.get(list1.getSelectedIndex()));
+
+                StringBuilder tabela = new StringBuilder("k \t x \t f(x) \n");
+                int k = 0;
+
+                for(Double i : raizes_aproximadas){
+                    tabela.append(String.format("%d \t %f \t %f \n",k++,i,biseccaco.resolverFuncao(i)));
+
+                }
+
+                textPane2.setText(tabela.toString());
 
             }
         });

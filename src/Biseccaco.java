@@ -42,14 +42,6 @@ public class Biseccaco {
     }
 
     public double resolverFuncao(double x){
-//        System.out.println(Math.pow(x,5) * t5);
-//        System.out.println(Math.pow(x,4) * t4);
-//        System.out.println(Math.pow(x,3) * t3);
-//        System.out.println(Math.pow(x,2) * t2);
-//        System.out.println(x * t1);
-//        System.out.println(t0);
-
-
         return (Math.pow(x,5) * t5 + Math.pow(x,4) * t4 + Math.pow(x,3) * t3 + Math.pow(x,2) * t2 + x * t1 + t0);
     }
 
@@ -100,6 +92,34 @@ public class Biseccaco {
 
     }
 
+    public ArrayList<Double> refinarValores1(Integer[] intervalo){
+
+        ArrayList<Double> retorno = new ArrayList<>();
+        double a = intervalo[0];
+        double b = intervalo[1];
+
+        do{
+            double aux = ((b+a)/2);
+            retorno.add(aux);
+            //retorno.add(resolverFuncao(aux));
+            if(resolverFuncao(aux)*resolverFuncao(a)<0){
+                b = aux;
+            }else {
+                a = aux;
+            }
+        }while(Math.abs(b-a)>epsilon);
+
+        if(Math.abs(resolverFuncao(b))<Math.abs(resolverFuncao(a))){
+            retorno.add(b);
+            //retorno.add(resolverFuncao(b));
+        }else {
+            retorno.add(a);
+            //retorno.add(resolverFuncao(b));
+        }
+        return retorno;
+
+    }
+
     public String exibirIntervalos(){
         StringBuilder retorno = new StringBuilder("Intervalos: \n");
         intervalos = acharIntervalos();
@@ -110,7 +130,17 @@ public class Biseccaco {
         return retorno.toString();
     }
 
-    public String exibirRaizes(){
+    public ArrayList<String> exibirIntervalos1(){
+        ArrayList<String> retorno = new ArrayList<>();
+        intervalos = acharIntervalos();
+
+        for(Integer[] i : intervalos){
+            retorno.add(String.format("[%d,%d] \n", i[0], i[1]));
+        }
+        return retorno;
+    }
+
+    public String exibirRaizes1(){
         StringBuilder retorno = new StringBuilder("Raízes: \n");
         for (Integer[] i : intervalos) {
             retorno.append(refinarValores(i)).append("\n");
